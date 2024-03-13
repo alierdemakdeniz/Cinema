@@ -12,8 +12,9 @@ getLocalStorage();
 container.addEventListener("click", seatSelect)
 salon2.addEventListener("click", seatSelect)
 salon3.addEventListener("click", seatSelect)
-
 movie.addEventListener("change",selectSalon)
+
+
 function selectSalon(){
     if (movie.selectedIndex=== 1){
         salon1.setAttribute("style","display : block")
@@ -34,13 +35,19 @@ function selectSalon(){
 }
 
 buy.addEventListener("click", () => {
+    if (tickets.innerHTML < 1){
+        alert("Lütfen Koltuk Seçiniz !!!")
+    }
     let seats = document.querySelectorAll(".row>.seat")
     seats.forEach(function (seat) {
         if (seat.className.includes("selected")) {
             seat.className = "seat reserved"
         }
+        
+        
 
     });
+    
     ticketPay();
 
     // localStorage e kaydetmek için
@@ -81,7 +88,6 @@ function getLocalStorage() {
 
 }}
 function seatSelect(e){
-    console.log(e);
     if (e.target.classList.contains("seat") && !e.target.classList.contains("reserved")) {
         e.target.classList.toggle("selected");
         ticketPay();
@@ -89,9 +95,12 @@ function seatSelect(e){
 }
 function ticketPay() {
     const selectedSeats = document.querySelectorAll(".seat.selected").length;
-    console.log(selectedSeats);
+    
+    
 
     tickets.innerHTML = selectedSeats - 1;
     payment.innerHTML = (selectedSeats - 1) * movie.value
+   
+   
 
 }
